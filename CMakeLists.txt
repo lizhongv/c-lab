@@ -23,6 +23,5 @@ endif()
 
 add_subdirectory(common)
 
-# 各章的项目按阶段逐步加入：
-#   projects/01-webserver/stages/01-portable  → add_subdirectory(...)
-# 第 00 章基线为 Windows-only，不进入构建。
+# 各章的项目按阶段逐步加入；第 00 章基线为 Windows-only，不进入构建。
+add_subdirectory(projects/01-webserver/stages/01-portable)

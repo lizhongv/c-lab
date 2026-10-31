@@ -120,35 +120,37 @@ revbuf[rval] = 0x00;
 
 **修复方向**：第 01 章（安全读写封装）与第 06 章（ASan 回归）。
 
-### P0-3 发送失败时死循环，单线程被永久占住（拒绝服务）
+### P0-3 发送失败后不退出，单线程被长时间占用（拒绝服务）
 
-**现象**：客户端下载中途断开后，服务器进入死循环，不再响应任何请求。
+**现象**：客户端下载中途断开后，服务器不会立刻结束这个请求，而是继续读完剩余文件，每次发送失败都打印一行错误。文件越大，占用越久；若某次 `send()` 返回 0，才会真正死循环。
 
 **复现**：
 
 ```bash
-python -c "open('big.bin','wb').write(b'A'*(8*1024*1024))"
+python -c "open('big.bin','wb').write(b'A'*(64*1024*1024))"
 python tests/repro_p0.py --case disconnect      # 下到一半 RST 断开
-curl -m 3 "http://127.0.0.1:8080/test-file/txt/Genesis.txt"   # 超时
+curl -m 3 "http://127.0.0.1:8080/test-file/txt/Genesis.txt"
 ```
+
+观察：控制台出现大量 `Sending file information error!`；后续请求会排队，文件越大越明显。8 MB 文件下这个过程很快，不足以让人察觉，所以复现脚本用 64 MB。
 
 **根因**：`send.c:84-86` 与 `92-96`，发送失败时 `continue`，但 `file_stat.st_size` 没有递减：
 
 ```c
 if (Send_Ifon(Socket, sendbuf, send_length) == ERROR) {
     printf("Sending file information error!\n");
-    continue;          // st_size 没变，下一轮还是同样的数据、同样的失败
+    continue;          // st_size 没变，下一轮继续读文件、继续失败
 }
 ```
 
-另外 `other.c:10-19` 的 `Send_Ifon` 在 `send()` 返回 0 时也不会前进：
+循环之所以最终能结束，是因为文件读完后 `fread` 返回 0，`Send_Ifon(..., 0)` 返回 OK，随后才递减 `st_size`。也就是说：**失败不退出，而是空转到文件末尾**。真正无限循环发生在 `other.c:10-19`：
 
 ```c
 rval = send(Socket, sendbuf + sendtotal, bufleft, 0);
-if (rval < 0) break;   // rval == 0 时 sendtotal/bufleft 都不变，死循环
+if (rval < 0) break;   // rval == 0 时 sendtotal/bufleft 都不变，循环不前进
 ```
 
-**后果**：一次断连即可让整个服务不可用，且 CPU 占用上升。
+**后果**：大文件断连时单线程被空转占用，其他请求排队；日志刷屏；`send()` 返回 0 时进程卡死。
 
 **修复方向**：第 05 章（错误退出与资源处理）+ 第 04 章（每连接独立，坏连接不影响其他连接）。
 

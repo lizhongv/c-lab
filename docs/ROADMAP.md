@@ -21,7 +21,7 @@
 | 章 | 讲义 | 代码阶段 | 核心改动 | 自动化验收 |
 | --- | --- | --- | --- | --- |
 | 00 | `docs/00-baseline.md` | `stages/00-baseline/` | 原始代码 + 缺陷复现脚本 | `tests/repro_p0.py` 逐项复现 |
-| 01 | `docs/01-portable.md` | `stages/01-portable/` | CMake + 平台抽象（POSIX / Winsock）+ UTF-8 | Linux/macOS/Windows 编译；`ctest` |
+| 01 | `docs/01-portable.md` | `stages/01-portable/` | CMake + 平台抽象（POSIX / Winsock）+ UTF-8 | ✅ Linux/Windows 编译；`ctest` 通过 |
 | 02 | `docs/02-http.md` | `stages/02-http/` | 请求行与头部解析、响应构造、MIME、错误码 | 报文级集成测试（合法/非法/边界） |
 | 03 | `docs/03-security.md` | `stages/03-security/` | 根目录沙箱、路径规范化、URL 解码、请求上限 | 穿越用例全拒；解码用例全过 |
 | 04 | `docs/04-concurrency.md` | `stages/04-concurrency/` | 线程池或 epoll/kqueue、连接上限、优雅退出 | 并发压测；慢连接不阻塞 |

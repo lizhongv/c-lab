@@ -9,7 +9,7 @@
 | 章 | 讲义 | 代码 | 这一章解决的问题 |
 | --- | --- | --- | --- |
 | 00 | [00-baseline.md](docs/00-baseline.md) | [stages/00-baseline](stages/00-baseline/) | 先看见问题：7 个可远程触发的缺陷与一批协议错误 |
-| 01 | 计划中 | 计划中 | 只能在 Windows 编译、源码 GBK、无构建系统 |
+| 01 | [01-portable.md](docs/01-portable.md) | [stages/01-portable](stages/01-portable/) | 只能在 Windows 编译、源码 GBK、无构建系统 |
 | 02 | 计划中 | 计划中 | 报文不合法：`Data:`、LF 换行、`ctime` 日期、无 `Connection` |
 | 03 | 计划中 | 计划中 | 路径穿越、无 URL 解码、无根目录约束、无请求上限 |
 | 04 | 计划中 | 计划中 | 单线程阻塞：一个慢连接拖垮整个服务 |

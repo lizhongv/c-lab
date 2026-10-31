@@ -85,12 +85,12 @@ def case_recv_oob() -> None:
 
 
 def case_disconnect() -> None:
-    """P0-3：下载中途 RST 断开，服务器在发送循环里死循环。"""
+    """P0-3：下载中途 RST 断开，服务器空转到文件末尾；send 返回 0 时才是死循环。"""
     big = os.path.abspath("big.bin")
     if not os.path.exists(big):
         with open(big, "wb") as f:
-            f.write(b"A" * (8 * 1024 * 1024))
-        print("已生成", big, "（8 MB）")
+            f.write(b"A" * (64 * 1024 * 1024))
+        print("已生成", big, "（64 MB；8 MB 太小，空转过程短到察觉不到）")
     sock = connect()
     sock.sendall(b"GET /big.bin HTTP/1.1\r\nHost: 127.0.0.1\r\n\r\n")
     sock.recv(4096)
@@ -105,9 +105,10 @@ def case_disconnect() -> None:
         response = send_and_read(b"GET /test-file/txt/Genesis.txt HTTP/1.1\r\n\r\n", timeout=3)
         cost = time.time() - start
         print(f"后续请求：{status_line(response)}（{cost:.2f}s）")
-        print("判定：若超时或长时间无响应，说明发送循环没有退出，单线程已被占住。")
+        print("判定：若明显变慢或超时，说明单线程在空转读文件；文件越大越明显。")
+        print("      send 返回 0 时才会真正死循环（代码走读，见 other.c:10-19）。")
     except socket.timeout:
-        print("后续请求超时——复现成功：服务器卡在发送循环里。")
+        print("后续请求超时——服务器仍被这个断开的下载占用。")
     except OSError as error:
         print("后续请求失败：", error)
 
