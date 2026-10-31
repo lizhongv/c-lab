@@ -1,0 +1,31 @@
+# 构建与测试
+build/
+out/
+cmake-build-*/
+compile_commands.json
+
+# 编译产物
+*.o
+*.obj
+*.a
+*.lib
+*.exe
+*.pdb
+*.ilk
+
+# 第 00 章复现脚本生成的临时文件
+big.bin
+secret.txt
+
+# 编辑器与系统
+.idea/
+.vscode/
+.cache/
+.DS_Store
+Thumbs.db
+
+# 覆盖率与 Sanitizer
+*.gcda
+*.gcno
+*.gcov
+*.log
