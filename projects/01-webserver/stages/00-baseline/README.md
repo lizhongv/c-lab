@@ -1,7 +1,7 @@
 # 基线：WebServer1.0（原样）
 
 > 这是第 00 章的教材，**故意保留全部缺陷**。
-> 原仓库：<https://github.com/lizhongv/WebServer1.0>
+> 原仓库已归档删除；源码原样保存在本目录。
 > 转码说明：原项目为 GBK，本目录统一转 UTF-8，逻辑未改。
 
 ## 目录
@@ -14,7 +14,7 @@
 └── README.md
 ```
 
-原项目的 `test-file/gif/rain.gif`、`jpg/HotAirBalloon.jpg`、`png/paint.png` 共约 1.4 MB，未纳入本仓库。需要时从原仓库下载，或自己生成：
+原项目的 `test-file/gif/rain.gif`、`jpg/HotAirBalloon.jpg`、`png/paint.png` 共约 1.4 MB，未纳入本仓库。需要时自己生成：
 
 ```bash
 python -c "open('test-file/png/paint.png','wb').write(b'\x89PNG\r\n\x1a\n' + b'0'*300000)"

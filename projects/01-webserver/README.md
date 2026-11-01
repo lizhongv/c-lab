@@ -1,6 +1,6 @@
 # 01 · WebServer：从 590 行教学服务器到可测试的 HTTP 服务
 
-这条主线以 [WebServer1.0](https://github.com/lizhongv/WebServer1.0) 为起点。原项目是 2022 年的一次性练习：C 语言、Windows + WinSock、单线程、约 590 行，能把 `test-file/` 下的静态文件发给浏览器，也能在几秒内被一条精心构造的请求打崩。
+这条主线以 WebServer1.0 为起点。原项目是 2022 年的一次性练习：C 语言、Windows + WinSock、单线程、约 590 行，能把 `test-file/` 下的静态文件发给浏览器，也能在几秒内被一条精心构造的请求打崩。原仓库已归档删除，源码原样保存在 [`stages/00-baseline/`](stages/00-baseline/)。
 
 我们不重写它，而是**逐章重构**：每一章保留上一章的全部代码，只解决这一章的问题，并用测试把修好的行为钉住。
 
