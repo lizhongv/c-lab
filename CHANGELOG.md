@@ -10,6 +10,7 @@
 - `projects/01-webserver` 第 00 章：基线代码、7 个 P0 缺陷的讲义与复现脚本。
 - `projects/01-webserver` 第 01 章：平台抽象层（POSIX / WinSock）、CMake 接入、可配置端口、第 01 章讲义与集成测试。
 - 路线图：M0 工程骨架、M1 WebServer 七个阶段的验收标准。
+- 文档：README 增加徽章、页内导航与学习路线图（`docs/images/roadmap.png`）。
 
 ### 计划
 

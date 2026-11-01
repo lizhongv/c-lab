@@ -1,4 +1,22 @@
+<div align="center">
+
 # C Lab · 从能跑到跑对
+
+**以真实项目为教材的 C 语言学习仓库：从一份有 7 个缺陷的 590 行 HTTP 服务器出发，逐章重构成跑对、跑稳、跑安全的实现**
+
+![Language](https://img.shields.io/badge/language-C11-00599C)
+![Build](https://img.shields.io/badge/build-CMake%20%E2%89%A5%203.20-064F8C)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-2563EB)
+![CI](https://github.com/lizhongv/c-lab/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT%20%2B%20CC%20BY%204.0-16A34A)
+
+[学习路线](#学习路线) · [快速开始](#快速开始) · [章节结构](#每一章的固定结构) · [仓库结构](#仓库结构) · [参与贡献](#参与贡献)
+
+<img src="docs/images/roadmap.png" width="900" alt="学习路线：从基线到质量">
+
+</div>
+
+---
 
 一个以**真实项目**为教材的 C 语言学习仓库：不直接给「正确代码」，而是从一份有缺陷的真实实现出发，逐章重构，每一章都有可运行版本、可复现的问题和自动化验收。
 
